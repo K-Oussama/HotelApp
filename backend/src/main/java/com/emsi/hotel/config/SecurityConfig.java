@@ -32,13 +32,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN") // Admin endpoints
                 .antMatchers("/client/**").hasRole("CLIENT") // Client endpoints
                 .anyRequest().authenticated()
             .and()
-            .formLogin(); // Use form-based login (email & password)
+            .formLogin() // Use form-based login (email & password)
+            .and()
+            .httpBasic();
     }
+
+    /*@Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .inMemoryAuthentication()
+                .withUser("admin").password("admin").roles("ADMIN");
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
