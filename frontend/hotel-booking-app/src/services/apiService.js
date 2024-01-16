@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'http://localhost:8080';
 
-const apiService = axios.create({
+// Create an axios instance
+const instance = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true // This will enable cookies
 });
 
-export const fetchHotelData = () => {
-  return apiService.get('/hotel');
-};
+// Now you can use this instance for all subsequent requests
+export default instance;
 
-// Define other API calls needed for login, rooms, users, reservations, etc.
+
